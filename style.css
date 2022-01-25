@@ -1,0 +1,23 @@
+.rules  {
+    font-weight: 700;
+}
+
+.guesses {
+    color: green;
+    font-weight: 700;
+}
+
+.fermi {
+    color: green;
+    font-weight: 700;
+}
+
+.bagels {
+    color: red;
+    font-weight: 700;
+}
+
+.pico {
+    color: orange;
+    font-weight: 700;
+}
