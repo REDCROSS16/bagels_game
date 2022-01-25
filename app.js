@@ -42,6 +42,7 @@ class Bagels {
     getClues(guess) {
         if (guess == this.secretNum) {
             alert( 'You Won!!!');
+            this.btn.classList.add('disabled');
         }
         let guessArray = String(guess).split('');
         let secret = String(this.secretNum).split('');
