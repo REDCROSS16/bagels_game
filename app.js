@@ -2,16 +2,37 @@ class Bagels {
     constructor(guesses = 10, digits = 3) {
         this.secretNum = String(Math.floor(Math.random() * 1000));
         this.guesses = guesses;
+        document.querySelector('#guesses').textContent = this.guesses;
         this.digits = digits;
     }
     name = 'Alex';
+
+    btn = document.querySelector('#btn-check');
+    restart = document.querySelector('#restart');
+
+
+    restartGame() {
+        this.restart.addEventListener('click', () => {
+            location.reload();
+        })
+    }
 
     sayNumber() {
         console.log(this.secretNum);
     }
 
-    checkGuesses(){
-        
+    updateGuesses(){
+        this.guesses = this.guesses - 1;
+        document.querySelector('#guesses').textContent = this.guesses;
+        if (this.guesses === 0) {
+
+            alert('GAMEOVER!');
+            if (confirm('Вы хотите начать заново?')) {
+                location.reload();
+            } else {
+                this.btn.classList.add('disabled');
+            }
+        }
     }
 
     getSecretNumWarn() {
@@ -24,27 +45,26 @@ class Bagels {
         }
         let guessArray = String(guess).split('');
         let secret = String(this.secretNum).split('');
-        
+
+        // правильная цифра на правильном месте -  Fermi
         for (let item in guessArray) {
-            // console.log(`index ${item} value ${guessArray[item]}`)
-            // правильная цифра на правильном месте -  Fermi 
             if (secret[item] === guessArray[item]) {
-                this.createResult('Fermi', 'fermi');
-            } 
-
-        } 
-
+                this.createResult('Fermi', 'fermi'); 
+                return;
+            }
+        }
 
         // правильная цифра на неправильном месте -  Pico 
         for (let item in guessArray) {
             if (secret.includes(guessArray[item])) {
                 this.createResult('Pico', 'pico');
-
+                return;
             }
         }
-        
+
         // нет правильных цифр - Bagels 
         this.createResult('Bagels', 'bagels');
+        return;
     }
 
     createResult (text, className) {
@@ -75,6 +95,7 @@ class Bagels {
             }
 
             this.getClues(number);
+            bagels.updateGuesses();
         })
     }
 
@@ -90,6 +111,7 @@ const bagels = new Bagels;
 
 let input = document.querySelector('#i-1');
 let btn = document.querySelector('#btn-check');
+bagels.restartGame();
 bagels.setPlaceholder(input);
 bagels.getBtn(btn);
 
